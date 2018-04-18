@@ -9,7 +9,7 @@
       <h1>{{projectData.project.title}}</h1>
       <div class="text">{{projectData.project.shortDesc}}</div>
       <div class="cta">
-        <router-link to="workdetail/ccam" v-on:click.native="changeBg(); hideNav();">LINK</router-link>
+        <router-link :to="{path: '/workdetail/' + projectData.company.id}" v-on:click.native="changeBg(); hideNav();">LINK</router-link>
       </div>
     </div>
   </div>
