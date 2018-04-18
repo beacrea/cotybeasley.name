@@ -1,6 +1,17 @@
 <template>
   <div id="workdetail">
-    {{latestData.msg}}
+    <div v-if="latestData.updated === 0">
+      Loading...
+    </div>
+    <div v-if="latestData.updated === 1">
+      shii
+    </div>
+    <div v-if="latestData.updated === 2">
+      <h1>Response from db:</h1>
+      <div class="company" v-for="company in latestData.companies" :key="company.id">
+        {{company.fields.name}}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,17 +22,20 @@ export default {
     return {
       msg: 'This is a message',
       latestData: {
-        updated: false,
-        msg: ''
+        updated: 0,
+        status: '',
+        companies: {}
       }
     }
   },
   created: function () {
-    this.$http.get('http://api.coty.design').then(response => {
-      this.latestData.updated = true
-      this.latestData.msg = response.data.coolguy
+    this.$http.get('http://api.coty.design/companies').then(response => {
+      this.latestData.updated = 2
+      this.latestData.companies = response.data.records
     }, response => {
-      console.log('Error fetching latest version from Github repo.')
+      this.latestData.updated = 1
+      this.latestData.status = 'Error fetching data from database.'
+      console.log(this.latestData.status)
     })
   },
   methods: {
@@ -33,5 +47,20 @@ export default {
   // Imports
   @import "../globalStyles/global";
 
-  #workdetail {}
+  #workdetail {
+    overflow: scroll;
+    font-size: 1.6rem;
+    color: $color_dark;
+    padding: $padding_side;
+    * {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+  }
+  h1 {
+    margin-top: 0;
+    font-size: $h2_size;
+  }
+  .company {
+    margin-bottom: 1.6rem;
+  }
 </style>

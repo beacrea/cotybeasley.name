@@ -9,7 +9,7 @@
       <h1>{{projectData.project.title}}</h1>
       <div class="text">{{projectData.project.shortDesc}}</div>
       <div class="cta">
-        <span>COMING SOON</span>
+        <router-link to="workdetail" v-on:click.native="changeBg">LINK</router-link>
       </div>
     </div>
   </div>
@@ -25,6 +25,10 @@ export default {
     }
   },
   methods: {
+    changeBg: function () {
+      this.$emit('pageChange')
+      this.$emit('introStatus', 0)
+    }
   }
 }
 </script>

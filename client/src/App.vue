@@ -70,7 +70,7 @@ export default {
   &.pg-contact {
     background-image: url('/static/img/bg-contact.jpg');
   }
-  &.pg-work {
+  &.pg-work, &.pg-workdetail {
     background-image: url('/static/img/bg-work-light.jpg');
   }
 }
