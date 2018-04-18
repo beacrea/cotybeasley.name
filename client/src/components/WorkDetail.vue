@@ -9,15 +9,16 @@
     </div>
     <div v-if="latestData.updated === 2">
       <h1>Response from db:</h1>
-      <div class="company" v-for="company in latestData.companies" v-if="company.fields.id === $route.params.company" :key="company.id">
-        <h2>{{company.fields.name}}</h2>
-        <p>{{company.fields.location}}</p>
+      <div class="company">
+        <h2>{{latestData.company.name}}</h2>
+        <p>{{latestData.company.location}}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   components: {},
   data () {
@@ -26,21 +27,26 @@ export default {
       latestData: {
         updated: 0,
         status: '',
-        companies: {},
-        count: 0
+        id: '',
+        company: {},
+        count: 0,
+        project: {}
       }
     }
   },
+  beforeCreate: function () {
+    this.$emit('hideNav')
+  },
   created: function () {
-    this.$http.get('http://api.coty.design/companies').then(response => {
+    this.latestData.company.id = this.$route.params.company
+    this.$http.get('http://api.coty.design/companies/' + this.latestData.company.id).then(response => {
       this.latestData.updated = 2
-      this.latestData.companies = response.data.records
+      this.latestData.company = response.data.fields
     }, response => {
       this.latestData.updated = 1
       this.latestData.status = 'Error fetching data from database.'
       console.log(this.latestData.status)
     })
-    this.$emit('hideNav')
   },
   methods: {
     changeBg: function () {
