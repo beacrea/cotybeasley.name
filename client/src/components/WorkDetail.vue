@@ -8,7 +8,7 @@
     </div>
     <div v-if="latestData.updated === 2">
       <h1>Response from db:</h1>
-      <div class="company" v-for="company in latestData.companies" :key="company.id">
+      <div class="company" v-for="company in latestData.companies" v-if="company.fields.id === 'ccam'" :key="company.id">
         {{company.fields.name}}
       </div>
     </div>
