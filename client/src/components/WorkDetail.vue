@@ -1,5 +1,6 @@
 <template>
   <div id="workdetail">
+    <router-link :to="{ name: 'work'}" v-on:click.native="changeBg(); showNav();">Back</router-link>
     <div v-if="latestData.updated === 0">
       Loading...
     </div>
@@ -25,7 +26,8 @@ export default {
       latestData: {
         updated: 0,
         status: '',
-        companies: {}
+        companies: {},
+        count: 0
       }
     }
   },
@@ -38,8 +40,16 @@ export default {
       this.latestData.status = 'Error fetching data from database.'
       console.log(this.latestData.status)
     })
+    this.$emit('hideNav')
   },
   methods: {
+    changeBg: function () {
+      this.$emit('pageChange')
+      this.$emit('introStatus', 0)
+    },
+    showNav: function () {
+      this.$emit('showNav')
+    }
   }
 }
 </script>
@@ -53,6 +63,7 @@ export default {
     font-size: 1.6rem;
     color: $color_dark;
     padding: $padding_side;
+    z-index: 4;
     * {
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }

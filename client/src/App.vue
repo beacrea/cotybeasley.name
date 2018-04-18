@@ -2,9 +2,11 @@
   <div id="app" v-bind:class="activeBg">
     <span id="overlay" v-bind:style="{ opacity: blurAbout }"></span>
     <transition name="fade" mode="out-in" v-on:after-enter="afterEnter" appear>
-      <router-view v-on:introStatus="introBlurred" v-on:pageChange="changeBG" />
+      <router-view v-on:introStatus="introBlurred" v-on:pageChange="changeBG" v-on:hideNav="hideNav" v-on:showNav="showNav" />
     </transition>
-    <Navigation v-on:pageChange="changeBG" v-on:introStatus="introBlurred"></Navigation>
+    <transition name="peek" mode="out-in" v-on:after-enter="afterEnter" appear>
+      <Navigation v-show="nav" v-on:pageChange="changeBG" v-on:introStatus="introBlurred"></Navigation>
+    </transition>
   </div>
 </template>
 
@@ -21,12 +23,19 @@ export default {
   data () {
     return {
       activeBg: 'pg-' + this.$route.name,
-      blurAbout: 0
+      blurAbout: 0,
+      nav: true
     }
   },
   methods: {
     changeBG: function (e) {
       this.activeBg = 'pg-' + this.$route.name
+    },
+    hideNav: function () {
+      this.nav = false
+    },
+    showNav: function () {
+      this.nav = true
     },
     introBlurred: function (trigger) {
       this.blurAbout = trigger
@@ -91,10 +100,18 @@ export default {
 
 // Transitions
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s
+  transition: opacity 0.5s
 }
 
 .fade-enter, .fade-leave-active {
   opacity: 0
+}
+.peek-enter-active, .peek-leave-active {
+  transition: all 0.5s
+}
+.peek-enter, .peek-leave-active {
+  transition: all 0.15s;
+  opacity: 0;
+  transform: translate(0,64px);
 }
 </style>
