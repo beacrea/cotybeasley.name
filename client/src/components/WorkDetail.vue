@@ -8,8 +8,9 @@
     </div>
     <div v-if="latestData.updated === 2">
       <h1>Response from db:</h1>
-      <div class="company" v-for="company in latestData.companies" v-if="company.fields.id === 'ccam'" :key="company.id">
-        {{company.fields.name}}
+      <div class="company" v-for="company in latestData.companies" v-if="company.fields.id === $route.params.company" :key="company.id">
+        <h2>{{company.fields.name}}</h2>
+        <p>{{company.fields.location}}</p>
       </div>
     </div>
   </div>
@@ -62,5 +63,17 @@ export default {
   }
   .company {
     margin-bottom: 1.6rem;
+    background: rgba($color_blue-base, 0.9);
+    color: white;
+    padding: 1.6rem;
+    border-radius: 8px;
+    h2 {
+      line-height: 1;
+      margin: 0 0 0.8rem;
+    }
+    p {
+      margin: 0;
+      opacity: 0.8;
+    }
   }
 </style>

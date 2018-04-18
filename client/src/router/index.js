@@ -43,7 +43,7 @@ export default new Router({
       component: Work
     },
     {
-      path: '/workdetail',
+      path: '/workdetail/:company',
       name: 'workdetail',
       component: WorkDetail
     }
