@@ -21,6 +21,9 @@ export default {
     return {
       workItems: work
     }
+  },
+  created: function () {
+    this.$emit('showNav')
   }
 }
 </script>
